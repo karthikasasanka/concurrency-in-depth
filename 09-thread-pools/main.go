@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -19,9 +20,12 @@ func NewPool(workerCount int) *Pool {
 	}
 	pool.wg.Add(workerCount)
 	for i := 0; i < workerCount; i++ {
+		fmt.Println("workerCount " + strconv.Itoa(workerCount))
+		fmt.Println("i " + strconv.Itoa(i))
 		go func() {
 			defer pool.wg.Done()
 			for job := range pool.workQueue {
+				fmt.Println("in queue")
 				job()
 			}
 		}()
@@ -44,7 +48,7 @@ func main() {
 	for i := 0; i < 30; i++ {
 		job := func() {
 			time.Sleep(1 * time.Second)
-			fmt.Printf("job: completed\n")
+			fmt.Println("job: completed " + strconv.Itoa(i))
 		}
 		pool.AddJob(job)
 	}
