@@ -47,7 +47,7 @@ func main() {
 
 	for i := 0; i < 30; i++ {
 		job := func() {
-			time.Sleep(1 * time.Second)
+			time.Sleep(2 * time.Second)
 			fmt.Println("job: completed " + strconv.Itoa(i))
 		}
 		pool.AddJob(job)
